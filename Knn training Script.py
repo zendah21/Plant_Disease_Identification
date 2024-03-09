@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, classification_report
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import cross_val_score, StratifiedKFold, train_test_split
+import matplotlib.pyplot as plt
 
 # Constants
 IMAGE_SIZE = (128, 128)
@@ -35,6 +36,16 @@ def lbp_calculated_pixel(img, x, y):
     ]
     power_val = [1, 2, 4, 8, 16, 32, 64, 128]
     return sum(val_ar[i] * power_val[i] for i in range(len(val_ar)))
+
+
+def plot_dataset_distribution(labels, title):
+    plt.figure(figsize=(6, 4))
+    plt.hist(labels, bins=2, color=['blue', 'green'], edgecolor='black')
+    plt.title(title)
+    plt.xlabel('Class Label')
+    plt.ylabel('Number of Samples')
+    plt.xticks([0, 1], ['Unhealthy', 'Healthy'])
+    plt.show()
 
 
 def calculate_lbp_features(image):
@@ -99,13 +110,22 @@ def train_knn_model(features, labels, n_neighbors=3, weights='distance', metric=
                     random_state=RANDOM_STATE):
     print(f"n_neighbors={n_neighbors}, weights={weights}, metric={metric}")
 
-    # Oversampled the features by multiplying the original value with a number between 0 and 1
+    # Display the distribution of the dataset before oversampling
+    plot_dataset_distribution(labels, 'Distribution Before SMOTE')
+
+    # Oversampled the features to be between -1 and 1
     smote = SMOTE(sampling_strategy=OVERSAMPLING_STRATEGY, random_state=random_state)
     features, labels = smote.fit_resample(features, labels)
+
+    # Display the distribution of the dataset after oversampling
+    plot_dataset_distribution(labels, 'Distribution After SMOTE')
 
     # Standardize the features
     scaler = StandardScaler()
     features = scaler.fit_transform(np.array(features))
+
+    # Display the distribution of the dataset after standardization
+    plot_dataset_distribution(labels, 'Distribution After Standardization')
 
     # Initialize KNN model
     knn_model = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weights, metric=metric)
