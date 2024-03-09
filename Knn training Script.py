@@ -97,8 +97,8 @@ def load_all_features_and_labels(folder_paths):
         print(f"Processing folder: {folder_path}")
         num_images_in_folder = sum(1 for _ in os.listdir(folder_path) if _.lower().endswith(('.png', '.jpg', '.jpeg')))
         total_images += num_images_in_folder
-        label = 1 if "healthy" in folder_path.lower() else 0
-        features, labels = load_dataset(folder_path, label)
+        disease_name = folder_path.split('/')[-1]  # Assuming folder_path uses '/' as a separator
+        features, labels = load_dataset(folder_path, disease_name)
         all_features.extend(features)
         all_labels.extend(labels)
 
