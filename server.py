@@ -1,65 +1,139 @@
-import joblib
+import mysql.connector
+from flask import Flask, jsonify, request
 import cv2
 import numpy as np
 import base64
-import socket
-import threading
+import joblib
+from sklearn.random_projection import GaussianRandomProjection
 
-# Load the trained k-NN model
-with open('knn2_model.pkl', 'rb') as model_file:
-    best_knn = joblib.load(model_file)
+app = Flask(__name__)
+
+# Load the trained k-NN models
+with open('knn_model_binary.joblib', 'rb') as model_file:
+    binary_knn = joblib.load(model_file)
+
+with open('knn_model_multiclass.joblib', 'rb') as model_file:
+    multiclass_knn = joblib.load(model_file)
 
 # Load the StandardScaler used for normalization during training
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = joblib.load(scaler_file)
 
-# Variable to store the server's IP address
-server_ip = None
+# MySQL database configuration
+db_config = {
+    'host': 'localhost',
+    'user': 'admin',  # Updated username
+    'password': '1234',  # Updated password
+    'database': 'PlantDiseaseDB'
+}
 
-def handle_client(client_socket):
-    global server_ip
+# Connect to the MySQL database
+connection = mysql.connector.connect(**db_config)
 
-    # Get the client's IP address and port
-    client_address = client_socket.getpeername()
-    client_ip, client_port = client_address
+# Create a cursor object to execute SQL queries
+cursor = connection.cursor()
 
-    print(f"[*] Accepted connection from {client_ip}:{client_port}")
+def table_exists(table_name):
+    try:
+        cursor.execute("SHOW TABLES LIKE %s", (table_name,))
+        result = cursor.fetchone()
+        return bool(result)
+    except Exception as e:
+        print(f"Error checking if table exists: {e}")
+        return False
+def get_plant_and_disease(prediction):
+    plant_name, disease_name = prediction.split('___')
+    print(plant_name , disease_name)
+    return plant_name, disease_name.replace('_', ' ')
+def get_disease_info(plant_name, disease_name):
+    try:
+        if table_exists(plant_name + 'Diseases'):
+            # Query to fetch disease information
+            query = "SELECT SymptomDescription, TreatmentDescription FROM {} WHERE DiseaseName = %s".format(plant_name + 'Diseases')
+            cursor.execute(query, (disease_name,))
+            result = cursor.fetchone()
+            if result:
+                symptoms, treatment = result
+                return {'disease_name': disease_name, 'plant_name': plant_name, 'symptoms': symptoms, 'treatment': treatment}
+            else:
+                return jsonify({'error': f'Disease name {disease_name} not found for {plant_name}'})
+        else:
+            return jsonify({'error': f'No diseases found for {plant_name}'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
-    # Store the client's IP address in a variable
-    client_ip_variable = client_ip
 
-    # Update the server_ip variable with the server's IP address
-    server_ip = client_socket.getsockname()[0]
+@app.route('/')
+def index():
+    return jsonify({'result': 'Welcome to the server'})
 
-    # Receive message from the client (base64-encoded image)
-    request_data = client_socket.recv(1024)
-    image_data = request_data.decode('utf-8')
-    print(f"Received from client ({client_ip_variable}:{client_port}): {image_data}")
+@app.route('/get_disease_info', methods=['POST'])
+def get_disease_information():
+    try:
+        # Get the JSON data from the request
+        json_data = request.get_json()
+        base64_image = json_data.get('image', '')
 
-    # Make prediction
-    prediction = predict(image_data)
+        # Call the function to predict disease from the image
+        prediction = predict(base64_image)
 
-    if prediction is not None:
-        # Respond back to the client if needed
-        client_socket.send(str(prediction).encode('utf-8'))
+        if prediction is not None:
+            if prediction == 0:  # Healthy prediction from a binary model
+                return jsonify({'result': 'Healthy'})
+            else:  # Diseased prediction from a binary model
+                print("non healthy")
+                plant_name, disease_name = get_plant_and_disease(predict_multiclass(base64_image))
+                # Call the function to get disease information
+                disease_info = get_disease_info(plant_name, disease_name)
+                print(disease_info)
+                if disease_info:
+                    return jsonify({'result': disease_info})
+                else:
+                    return jsonify({'error': 'Failed to retrieve disease information'})
+        else:
+            return jsonify({'error': 'Error during prediction'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    # Close the connection
-    client_socket.close()
-    print(f"Connection from {client_address} closed")
+def predict(binary_image):
+    # Preprocess and extract features
+    features = preprocess_and_extract_features(binary_image)
 
-def start_socket_server():
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('0.0.0.0', 5000))  # Use a common port within the specified range
-    server.listen(5)
+    if features is not None:
+        # Normalize features using the pre-trained scaler
+        normalized_features = scaler.transform(np.array([features]))
+        # Apply random projection for dimensionality reduction
+        random_projection = GaussianRandomProjection(n_components=2000, random_state=42)
+        reduced_features = random_projection.fit_transform(normalized_features)
 
-    print("[*] Socket server listening on 0.0.0.0:5000")
+        # Make predictions using the pre-trained binary k-NN model
+        prediction = binary_knn.predict(reduced_features)
 
-    while True:
-        client, addr = server.accept()
-        client_handler = threading.Thread(target=handle_client, args=(client,))
-        client_handler.start()
+        return prediction[0]  # Return the predicted class
+    else:
+        return None
 
-def predict(image):
+def predict_multiclass(image):
+    print('multiclass')
+    # Preprocess and extract features
+    features = preprocess_and_extract_features(image)
+    print(features)
+    if features is not None:
+        # Normalize features using the pre-trained scaler
+        normalized_features = scaler.transform(np.array([features]))
+        print(normalized_features)
+        random_projection = GaussianRandomProjection(n_components=1000, random_state=42)
+        reduced_features = random_projection.fit_transform(normalized_features)
+        print(reduced_features)
+        # Make predictions using the pre-trained multiclass k-NN model
+        prediction = multiclass_knn.predict(reduced_features)
+        print (prediction)
+        return prediction[0]  # Return the predicted class
+    else:
+        return None
+
+def preprocess_and_extract_features(image):
+    print('preprocess_and_extract_features')
     try:
         # Convert the base64-encoded image to a NumPy array
         image_data = base64.b64decode(image)
@@ -75,26 +149,16 @@ def predict(image):
         # Calculate LBP features
         lbp_features = calculate_lbp_features(gray_image)
 
-        # Normalize features using the pre-trained scaler
-        normalized_features = scaler.transform(np.array([lbp_features]))
-
-        # Make predictions using the pre-trained k-NN model
-        prediction = best_knn.predict(normalized_features)
-
-        return bool(prediction[0])  # Return the predicted class (0 or 1)
+        return lbp_features
     except Exception as e:
         print(f"Error processing image: {e}")
         return None
 
-def calculate_lbp_features(image):
-    rows, cols = image.shape
-    lbp_values = np.zeros_like(image, dtype=np.uint8)
-
-    for i in range(1, rows - 1):
-        for j in range(1, cols - 1):
-            lbp_values[i, j] = lbp_calculated_pixel(image, i, j)
-
-    return lbp_values.flatten()
+def get_pixel(img, center, x, y):
+    new_value = 0
+    if img[x][y] >= center:
+        new_value = 1
+    return new_value
 
 def lbp_calculated_pixel(img, x, y):
     center = img[x][y]
@@ -108,20 +172,15 @@ def lbp_calculated_pixel(img, x, y):
         val += val_ar[i] * power_val[i]
     return val
 
-def get_pixel(img, center, x, y):
-    new_value = 0
-    try:
-        if img[x][y] >= center:
-            new_value = 1
-    except:
-        pass
-    return new_value
+def calculate_lbp_features(image):
+    rows, cols = image.shape
+    lbp_values = np.zeros_like(image, dtype=np.uint8)
+
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
+            lbp_values[i, j] = lbp_calculated_pixel(image, i, j)
+
+    return lbp_values.flatten()
 
 if __name__ == '__main__':
-    # Start the socket server in a separate thread
-    socket_thread = threading.Thread(target=start_socket_server)
-    socket_thread.start()
-
-    # Keep the main thread free for other tasks, you can add your additional logic here if needed
-    while True:
-        pass
+    app.run(debug=True)
