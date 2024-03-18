@@ -1,0 +1,221 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS PlantDiseaseDB;
+USE PlantDiseaseDB;
+
+-- Create table for Tomato diseases
+CREATE TABLE IF NOT EXISTS TomatoDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Corn diseases
+CREATE TABLE IF NOT EXISTS CornDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Apple diseases
+CREATE TABLE IF NOT EXISTS AppleDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Grapes diseases
+CREATE TABLE IF NOT EXISTS GrapesDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Cherry diseases
+CREATE TABLE IF NOT EXISTS CherryDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Potato diseases
+CREATE TABLE IF NOT EXISTS PotatoDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Strawberry diseases
+CREATE TABLE IF NOT EXISTS StrawberryDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Peach diseases
+CREATE TABLE IF NOT EXISTS PeachDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Bell Pepper diseases
+CREATE TABLE IF NOT EXISTS BellPepperDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Orange diseases
+CREATE TABLE IF NOT EXISTS OrangeDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Squash diseases
+CREATE TABLE IF NOT EXISTS SquashDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Create table for Soybeans diseases
+CREATE TABLE IF NOT EXISTS SoybeansDiseases (
+    DiseaseID INT AUTO_INCREMENT PRIMARY KEY,
+    DiseaseName VARCHAR(255) NOT NULL,
+    SymptomDescription TEXT,
+    TreatmentDescription TEXT
+);
+
+-- Insert data for Tomato diseases
+INSERT INTO TomatoDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Early Blight', 'Dark spots with rings on lower leaves', 'Pruning, fungicide'),
+('Late Blight', 'Stems turning black, water mold (Phytophthora infestans)', 'Remove infected plants immediately. Use sterilized garden tools and disease-resistant varieties. Monitor plants closely for early signs'),
+('Fusarium Wilt', 'Entire plant wilts during the day, leaves yellow on one side of the plant', 'Plant resistant varieties'),
+('Powdery Mildew', 'Light green or yellow spots on leaves turn dusty white', 'Sulfur dust, fungicides, biofungicides, horticultural oil'),
+('Anthracnose', 'Small, sunken, water-soaked spots on ripening fruit', 'Fungicide as preventive'),
+('Septoria Leaf Spot', 'Small, brown, round spots on leaves', 'Fungicide, biofungicide'),
+('Botrytis', 'Gray-brown mold on leaves, stems, or fruit', 'Fungicide, biofungicide specific for gray mold'),
+('Bacterial Speck', 'Irregular brown or black spots near leaf margins, on stems, or fruit', 'Copper fungicide applied as preventive'),
+('Southern Blight', 'Stem lesions at or near the soil line', 'Solarization, fungicides, biofungicides, soil fumigants'),
+('Alfalfa Mosaic Virus', 'Infected unripe fruit spread by aphids', 'Control aphids with natural predators like ladybugs');
+
+-- Insert data for Corn diseases
+INSERT INTO CornDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Anthracnose Leaf Blight', 'Small, water-soaked lesions turning tan to brown with yellow to reddish-brown borders. Black, hair-like structures (setae) may be present', 'Fungicides in warm, humid weather'),
+('Common Rust', 'Cinnamon-brown, powdery circular-to-elongated pustules on upper and lower leaf surfaces. Pustules rupture, releasing rust spores', 'Fungicides in moderate to cool temperatures'),
+('Southern Rust', 'Circular, light cinnamon-brown to orange-colored pustules on upper surfaces, leaf sheaths, and husk leaves', 'Fungicides in warm, humid weather'),
+('Eyespot', 'Small, translucent lesions surrounded by yellow to purple margins', 'Manage cool, moist weather conditions'),
+('Gray Leaf Spot', 'Gray to tan, rectangular lesions on leaf, sheath, or husk tissue. Spots may have a gray, downy appearance on the underside', 'Fungicides in extended periods of warm, overcast days and high humidity'),
+('Physoderma Brown Spot and Node Breakage', 'Small yellow spots turning brown, occurring in bands across the leaf. Irregular blotches may form on the mid-rib', 'Manage warm, wet weather conditions'),
+('Northern Corn Leaf Blight', 'Long, elliptical to cigar-shaped, gray-green lesions turning tan or brown', 'Control measures include managing high humidity and moderate temperatures'),
+('Southern Corn Leaf Blight', 'Small, elongated lesions with tan centers and brownish borders', 'Favored by high humidity and warm temperatures'),
+('Goss’s Wilt', 'Leaf blight with dull gray-green to necrotic lesions and water-soaked freckles. Bacterial droplets may ooze from infected tissues', 'Management includes addressing plant injury and using resistant corn products'),
+('Stewart’s Bacterial Wilt', 'Long, green-gray, water-soaked lesions with wavy margins on leaves. Streaks on leaves may appear after tasseling', 'Control flea beetle populations and manage disease vectors'),
+('Tar Spot', 'Small, irregularly shaped black lesions on both upper and lower leaf surfaces', 'Management includes burying residue, crop rotation, tolerant corn products, and fungicides');
+
+-- Insert data for Apple diseases
+INSERT INTO AppleDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Fire Blight', 'Browning of leaves or blossoms with or without open cankers, damage on branches', 'Prune infected tissue a few inches below the visible infection. Sanitize shears after pruning each tree to prevent spreading'),
+('Powdery Mildew', 'Fluffy white presence on leaves and branches', 'Spray apple trees with lime sulfur. Prune away mildew-infested shoots. Clean up leaves in the fall to prevent spring return'),
+('Apple Scab', 'Darker lesions on tops of leaves, lighter lesions on the bottom. Lesions on apples in severe cases', 'Remove leaves in the fall to prevent reinfection in the spring'),
+('Phytophthora Rot', 'Tricky to spot; peel back bark and look for orange or brown color. Yellowish leaves turning purple in advanced stages', 'Ensure good drainage to prevent wet soil, where the fungus thrives'),
+('Apple Rust', 'Rusty, orangish-yellow stains on leaves, branches, and fruit. Fungus uses one tree as a host, spreads to others', 'Eliminate the host tree quickly. Spray trees with lime sulfur to fight fungal spores'),
+('Black Rot', 'Brown spots on the end of each apple, growing larger and turning black. Holes in infected leaves', 'Prune or burn infected parts. Spray with sulfur or Captan to prevent spread'),
+('Sooty Blotch', 'Black or gray spots on apples. Not harmful to edibility', 'Treat with a chemical spray. Prune back trees for better airflow'),
+('Apple Mosaic Virus', 'Small, yellowish spots on leaves in the spring, growing larger as the disease advances. Leaves die prematurely', 'Manage overall tree health. No specific treatment, but early detection is crucial'),
+('White Rot', 'Small spots and blisters on branches, branches turning orange. Brown or white spots on apples', 'Use fungicide on infected trees. Thoroughly prune and remove infected wood');
+
+-- Insert data for Grapes diseases
+INSERT INTO GrapesDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Downy Mildew', 'Yellow to reddish-brown lesions on leaves. Dense white and cotton-like growth in lesions. Infected shoot tips thicken and curl, leaves turn brown and die. Young berries highly susceptible to powdery rot, appearing gray with "downy" felt of fungus spores', 'Preventative product like LifeGard. Spray effective fungicide just before blossoms open, 7-10 days later, and follow intervals of 10-14 days. Final application a few weeks later depending on disease pressure and label instructions'),
+('Powdery Mildew', 'Chlorotic spots on upper leaf surface. White mycelium on lower leaf surface, giving a "powdery" appearance. Black or brown web scarring on mature fruit. Red blotchy areas on fruit', 'Fungicide treatments should begin promptly and be repeated at appropriate intervals'),
+('Bunch Rot / Botrytis', 'Patches of soft brown tissue causing infected plant part death. Individual berries infected, turning brown or reddish. Epidermis often ruptures, revealing "gray mold". Infected berries become gray with "bunch rot", producing ash-gray sporulation', 'Sanitation practices, remove infected plant parts. Employ cultural controls and fungicides during critical growth stages to prevent infection. Post-harvest control strategies include sanitation, humidity reduction, and refrigeration'),
+('Black Rot', 'Small, brown circular spots on leaves. Yellow halo surrounding the spots. Spots grow, becoming irregularly shaped and darkening. Shoot tips wilt and die. Infected berries shrivel and blacken', 'Cultural practices such as pruning, mowing, and removal of infected plant material. Fungicide application during pre-bloom, bloom, and early fruit set');
+
+-- Insert data for Cherry diseases
+INSERT INTO CherryDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Brown Rot', 'Infected fruit develops brown spots and quickly becomes soft and mummified. Fungus forms spores on the surface of the fruit, producing a powdery mass', 'Fungicides applied during bloom, petal fall, and after rain may provide control. Remove mummified fruit and prune to increase air circulation'),
+('Powdery Mildew', 'White powdery fungal growth on leaves, shoots, flowers, and fruit surfaces', 'Fungicide application early in the season and repeated as needed. Prune to improve airflow'),
+('Cherry Leaf Spot', 'Circular, purple spots on leaves with yellow halos', 'Fungicides applied during the growing season. Prune to improve airflow and remove infected leaves'),
+('Cherry Buckskin Disease', 'Circular or irregular brown spots on leaves with yellow halos', 'Fungicide application during the growing season. Prune to improve airflow and remove infected leaves'),
+('Bacterial Canker', 'Sunken, discolored areas on the bark, often with gum exuding from cracks', 'Prune out affected branches and destroy them. Disinfect pruning tools between cuts'),
+('Cherry Powdery Mildew', 'White powdery fungal growth on leaves, shoots, flowers, and fruit surfaces', 'Fungicide application early in the season and repeated as needed. Prune to improve airflow'),
+('Crown Gall', 'Swollen, tumor-like growths on roots or stems near the soil line', 'Preventative measures include using disease-free planting material and avoiding mechanical injuries to plants'),
+('Cherry Witches’ Broom', 'Abnormal proliferation of small branches resulting in dense clusters of twigs resembling a broom', 'Prune out affected branches and destroy them. Disinfect pruning tools between cuts'),
+('Cherry Virus Diseases', 'Varied symptoms including leaf mottling, leaf deformation, and reduced fruit quality', 'No cure for viral diseases. Remove and destroy infected plants to prevent spread');
+
+-- Insert data for Potato diseases
+INSERT INTO PotatoDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Late Blight', 'Water-soaked lesions on leaves, often with a white mold growth on the underside. Infected tubers develop dark, firm lesions', 'Use fungicides preventatively. Remove and destroy infected plants and tubers. Avoid overhead irrigation'),
+('Early Blight', 'Dark, concentric rings on leaves, starting from the bottom. Lesions may have a target-like appearance', 'Use fungicides preventatively. Remove and destroy infected plant debris. Practice crop rotation'),
+('Blackleg', 'Black lesions at the stem base, wilting and death of foliage', 'Plant certified seed potatoes. Remove and destroy infected plants. Practice crop rotation. Apply fungicides preventatively'),
+('Potato Wart', 'Warty growths on tubers, reducing yield and quality', 'Use certified disease-free seed potatoes. Practice crop rotation. Destroy infected plants and tubers'),
+('Common Scab', 'Rough, corky patches on the surface of tubers', 'Maintain soil pH around 5.2 to 5.5. Avoid excessive irrigation. Use resistant potato varieties if available'),
+('Early Dying', 'Premature yellowing and dying of foliage', 'Practice crop rotation. Use resistant potato varieties if available'),
+('Potato Virus Y', 'Mottling, yellowing, and curling of leaves. Reduced yield and quality of tubers', 'Use virus-free seed potatoes. Control aphid vectors. Remove and destroy infected plants'),
+('Potato Cyst Nematode', 'Stunted growth, yellowing of leaves, reduced yield', 'Plant resistant potato varieties. Practice crop rotation. Use soil fumigants if necessary'),
+('Powdery Scab', 'Raised, scabby lesions on tubers', 'Maintain soil pH around 5.8 to 6.2. Practice crop rotation. Use certified disease-free seed potatoes');
+
+-- Insert data for Strawberry diseases
+INSERT INTO StrawberryDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Anthracnose Fruit Rot', 'Small, dark sunken lesions on fruit surface. Lesions expand and become covered with pinkish spore masses in humid conditions', 'Fungicide application starting at bloom and repeated at intervals according to label instructions. Remove and destroy infected fruit'),
+('Botrytis Fruit Rot', 'Gray mold covering fruit surface. Infected tissue turns soft and watery', 'Fungicide application starting at bloom and repeated at intervals according to label instructions. Remove and destroy infected fruit'),
+('Powdery Mildew', 'White, powdery growth on leaves and fruit surface', 'Fungicide application starting at bloom and repeated at intervals according to label instructions. Remove and destroy infected leaves'),
+('Verticillium Wilt', 'Wilting and yellowing of leaves. Browning of vascular tissue in crown and roots', 'Plant resistant cultivars. Avoid planting in fields with a history of Verticillium wilt. Soil fumigation may be necessary in severe cases'),
+('Phytophthora Crown Rot', 'Reddish-brown lesions on crown and roots. Wilting and death of leaves', 'Improve soil drainage. Plant in raised beds or mounds. Apply fungicides preventatively'),
+('Angular Leaf Spot', 'Angular, water-soaked lesions on leaves. Lesions may turn brown and necrotic. White fungal growth may develop on the underside of leaves', 'Plant disease-resistant cultivars. Apply copper-based fungicides preventatively');
+
+-- Insert data for Peach diseases
+INSERT INTO PeachDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Peach Leaf Curl', 'Distorted, puckered, and reddened leaves', 'Spray with copper fungicide during dormancy before buds swell'),
+('Brown Rot', 'Brown, circular spots on fruit which rapidly expand and cover the entire fruit', 'Spray fungicide before and after bloom, maintain good air circulation around trees, and remove mummified fruit'),
+('Bacterial Spot', 'Circular, water-soaked lesions on leaves, which turn brown or black and fall out, leaving holes', 'Copper-based fungicides before and after bloom, prune to increase air circulation'),
+('Peach Scab', 'Olive-green to black spots on fruit and leaves', 'Spray fungicides before and after bloom, prune to increase air circulation'),
+('Peach Rosette Mosaic', 'Mosaic pattern on leaves, leaf distortion, and stunting', 'No cure, remove and destroy infected plants'),
+('Peach Tree Short Life', 'Sudden collapse and death of young trees', 'Avoid planting in poorly drained sites, use resistant rootstocks, and manage soil moisture carefully'),
+('Peach Yellows', 'Yellowing and curling of leaves, premature fruit drop', 'No cure, remove and destroy infected trees, control leafhoppers'),
+('Peach Crown Gall', 'Swollen, tumor-like growths on roots or stems near the soil line', 'Remove and destroy infected tissue, avoid wounding plants during cultivation'),
+('Peach Mosaic', 'Mottling and distortion of leaves, reduced fruit size and quality', 'No cure, remove and destroy infected plants');
+
+-- Insert data for Bell Pepper diseases
+INSERT INTO BellPepperDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Bacterial Spot', 'Circular, water-soaked lesions on leaves, which turn brown or black and fall out, leaving holes', 'Copper-based fungicides before and after bloom, prune to increase air circulation'),
+('Powdery Mildew', 'White powdery substance on leaves and stems', 'Remove and destroy infected plant parts. Apply fungicides early in the season. Improve air circulation around plants'),
+('Anthracnose', 'Irregularly shaped lesions on leaves and fruit, which may ooze pinkish spores', 'Apply fungicides preventatively. Remove and destroy infected plant parts. Improve air circulation around plants'),
+('Verticillium Wilt', 'Wilting and yellowing of leaves. Browning of vascular tissue in crown and roots', 'Plant resistant cultivars. Avoid planting in fields with a history of Verticillium wilt. Soil fumigation may be necessary in severe cases'),
+('Phytophthora Blight', 'Dark, water-soaked lesions on stems and fruit. Wilting and death of leaves and branches', 'Improve soil drainage. Apply fungicides preventatively. Avoid overhead irrigation');
+
+-- Insert data for Orange diseases
+INSERT INTO OrangeDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Citrus Canker', 'Raised, corky lesions on leaves, fruit, and stems. Lesions may ooze bacterial fluid', 'Remove and destroy infected plant parts. Apply copper-based bactericides preventatively. Improve air circulation around trees'),
+('Citrus Greening', 'Yellowing and mottling of leaves. Misshapen and bitter-tasting fruit', 'There is no cure for citrus greening. Remove and destroy infected trees. Control citrus psyllid vectors. Use healthy planting material'),
+('Citrus Tristeza Virus', 'Yellowing and vein clearing on leaves. Decline in tree vigor and fruit quality', 'There is no cure for citrus tristeza virus. Remove and destroy infected trees. Use disease-free planting material. Control aphid vectors'),
+('Melanose', 'Dark, raised lesions on fruit and leaves. Lesions may crack and ooze gum', 'Prune to increase air circulation. Apply fungicides during dormant season and after rain. Remove and destroy infected plant parts'),
+('Sooty Mold', 'Black, velvety fungal growth on leaves, stems, and fruit. Often associated with honeydew excreted by sucking insects', 'Control sucking insect pests such as aphids and scales. Improve air circulation around trees. Remove and destroy infected plant parts');
+
+-- Insert data for Squash diseases
+INSERT INTO SquashDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Powdery Mildew', 'White powdery substance on leaves and stems', 'Remove and destroy infected plant parts. Apply fungicides early in the season. Improve air circulation around plants'),
+('Downy Mildew', 'Yellow angular spots on upper leaf surface with corresponding white or grayish growth on lower leaf surface', 'Apply fungicides preventatively. Remove and destroy infected plant parts. Improve air circulation around plants'),
+('Anthracnose', 'Irregularly shaped lesions on leaves and fruit, which may ooze pinkish spores', 'Apply fungicides preventatively. Remove and destroy infected plant parts. Improve air circulation around plants'),
+('Blossom End Rot', 'Brown, sunken lesions on the blossom end of fruit', 'Maintain consistent soil moisture. Avoid excessive nitrogen fertilization. Apply calcium-containing amendments if calcium deficiency is suspected'),
+('Cucumber Mosaic Virus', 'Mottling, yellowing, and distortion of leaves. Stunted growth', 'There is no cure for cucumber mosaic virus. Control aphid vectors. Remove and destroy infected plants');
+-- Insert data for Soybeans diseases
+INSERT INTO SoybeansDiseases (DiseaseName, SymptomDescription, TreatmentDescription) VALUES
+('Soybean Rust', 'Small, yellow or tan spots on upper leaf surface with corresponding brown pustules on lower leaf surface', 'Apply fungicides preventatively. Plant resistant varieties if available. Remove and destroy infected plant debris'),
+('Soybean Cyst Nematode', 'Stunted growth, yellowing of leaves, reduced yield', 'Plant resistant soybean varieties. Practice crop rotation with non-host crops. Use nematicides if necessary'),
+('Sudden Death Syndrome', 'Yellowing and browning between leaf veins. Premature defoliation', 'Plant resistant soybean varieties. Improve soil drainage. Avoid compaction and waterlogging'),
+('Brown Stem Rot', 'Brown discoloration of stem cortex. Premature defoliation and plant death', 'Plant resistant soybean varieties. Practice crop rotation with non-host crops. Improve soil drainage'),
+('Charcoal Rot', 'Wilting and yellowing of leaves. Dark discoloration of stem base and roots', 'Improve soil drainage. Avoid planting in fields with a history of charcoal rot. Plant resistant soybean varieties');
